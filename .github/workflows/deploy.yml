@@ -3,8 +3,6 @@ name: Deploy to Vercel
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   deploy:
@@ -14,8 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-      - run: npm ci
+      - run: npm install
       - run: npm run build
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
