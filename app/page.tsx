@@ -2,6 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { shopeeLink } from "@/lib/affiliate";
+import { feedProducts, hasRealProducts } from "@/lib/products";
+
+type DisplayDeal = {
+  id: string | number;
+  name: string;
+  link: string;
+  emoji?: string;
+  imageUrl?: string;
+  originalPrice: number;
+  salePrice: number;
+  discount: number;
+  rating: number;
+  sold: number;
+  stockLeft: number;
+  hot?: boolean;
+};
 
 type Deal = {
   id: number;
@@ -79,6 +95,35 @@ function CountBox({ value, label }: { value: number; label: string }) {
   );
 }
 
+// Ưu tiên hiển thị sản phẩm thật từ feed Shopee; nếu chưa import thì dùng deal mẫu.
+const displayDeals: DisplayDeal[] = hasRealProducts
+  ? feedProducts.map((p, i) => ({
+      id: p.id,
+      name: p.name,
+      link: p.productUrl,
+      imageUrl: p.imageUrl,
+      originalPrice: p.originalPrice,
+      salePrice: p.price,
+      discount: p.discount,
+      rating: p.rating,
+      sold: p.sold,
+      stockLeft: ((p.sold % 30) + 5),
+      hot: i < 6 || p.discount >= 40,
+    }))
+  : deals.map((d) => ({
+      id: d.id,
+      name: d.name,
+      link: shopeeLink({ keyword: d.keyword }),
+      emoji: d.image,
+      originalPrice: d.originalPrice,
+      salePrice: d.salePrice,
+      discount: d.discount,
+      rating: d.rating,
+      sold: d.sold,
+      stockLeft: d.stockLeft,
+      hot: d.hot,
+    }));
+
 export default function Home() {
   const t = useCountdown();
 
@@ -106,6 +151,7 @@ export default function Home() {
             />
             <button className="bg-orange-500 hover:bg-orange-400 px-4 rounded-r-full text-sm font-bold transition">🔍</button>
           </form>
+          <a href="/tao-link" className="hidden md:inline text-sm text-gray-400 hover:text-orange-400 transition flex-shrink-0">🔗 Tạo link</a>
         </div>
       </nav>
 
@@ -187,8 +233,8 @@ export default function Home() {
           <a href={shopeeLink({ keyword: "flash sale" })} target="_blank" rel="noopener noreferrer sponsored" className="text-orange-400 hover:text-orange-300 text-xs md:text-sm font-medium">Xem tất cả →</a>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {deals.map((d) => {
-            const link = shopeeLink({ keyword: d.keyword });
+          {displayDeals.map((d) => {
+            const link = d.link;
             const stockPct = Math.min(100, Math.round((d.stockLeft / 50) * 100));
             return (
               <a
@@ -198,9 +244,14 @@ export default function Home() {
                 rel="noopener noreferrer sponsored"
                 className="bg-gray-900 border border-gray-800 hover:border-orange-500/50 rounded-2xl overflow-hidden transition group hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10 flex flex-col"
               >
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 h-32 md:h-40 flex items-center justify-center relative">
-                  <span className="text-5xl">{d.image}</span>
-                  <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-md">-{d.discount}%</span>
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 h-32 md:h-40 flex items-center justify-center relative overflow-hidden">
+                  {d.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={d.imageUrl} alt={d.name} loading="lazy" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-5xl">{d.emoji}</span>
+                  )}
+                  {d.discount > 0 && <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-md">-{d.discount}%</span>}
                   {d.hot && <span className="absolute top-2 right-2 bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">🔥 HOT</span>}
                 </div>
                 <div className="p-3 flex flex-col flex-1">
