@@ -1,25 +1,13 @@
-// Paste your affiliate IDs here after registering
-export const AFFILIATE_IDS = {
-  shopee: "an_17342890096",
-  lazada: "",    // e.g. "tuanlt1989" from affiliate.lazada.vn
-  amazon: "",    // e.g. "tuanlt-20" from Amazon Associates
-};
+// Shopee Affiliate ID — lấy từ affiliate.shopee.vn (mmp_pid / utm_source)
+export const SHOPEE_AFFILIATE_ID = "an_17342890096";
 
-export function buildAffiliateLink(store: string, productUrl: string): string {
-  switch (store) {
-    case "Shopee":
-      return AFFILIATE_IDS.shopee
-        ? `${productUrl}&mmp_pid=${AFFILIATE_IDS.shopee}&utm_source=${AFFILIATE_IDS.shopee}&utm_medium=affiliates`
-        : productUrl;
-    case "Lazada":
-      return AFFILIATE_IDS.lazada
-        ? `https://www.lazada.vn/products/?aff_id=${AFFILIATE_IDS.lazada}&url=${encodeURIComponent(productUrl)}`
-        : productUrl;
-    case "Amazon":
-      return AFFILIATE_IDS.amazon
-        ? productUrl.includes("?") ? `${productUrl}&tag=${AFFILIATE_IDS.amazon}` : `${productUrl}?tag=${AFFILIATE_IDS.amazon}`
-        : productUrl;
-    default:
-      return productUrl;
-  }
+// Tạo link Shopee có gắn affiliate tracking.
+// Hỗ trợ cả link sản phẩm thật lẫn link tìm kiếm theo keyword.
+export function shopeeLink(input: { url?: string; keyword?: string }): string {
+  const base =
+    input.url ??
+    `https://shopee.vn/search?keyword=${encodeURIComponent(input.keyword ?? "")}`;
+
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}mmp_pid=${SHOPEE_AFFILIATE_ID}&utm_source=${SHOPEE_AFFILIATE_ID}&utm_medium=affiliates&utm_campaign=dealsync`;
 }
