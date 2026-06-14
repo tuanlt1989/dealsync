@@ -176,31 +176,43 @@ export default function Home() {
       </div>
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-gray-950 to-orange-950/40 py-12 md:py-16 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent" />
-        <div className="max-w-3xl mx-auto text-center relative">
-          <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 rounded-full px-4 py-1 text-orange-400 text-xs md:text-sm font-medium mb-5">
-            🔥 Hơn 1.247 deal Shopee giảm sốc hôm nay
+      <section className="relative py-16 md:py-24 px-4 overflow-hidden">
+        {/* animated gradient blobs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-orange-600/30 rounded-full blur-[100px] animate-float" />
+          <div className="absolute top-10 right-0 w-80 h-80 bg-red-600/20 rounded-full blur-[100px] animate-float" style={{ animationDelay: "1.5s" }} />
+          <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-pink-600/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: "3s" }} />
+        </div>
+        <div className="max-w-3xl mx-auto text-center relative animate-fade-up">
+          <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur border border-orange-500/30 rounded-full px-4 py-1.5 text-orange-300 text-xs md:text-sm font-medium mb-6">
+            <span className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
+            Hơn 1.247 deal giảm sốc cập nhật hôm nay
           </div>
-          <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight">
-            Săn Deal <span className="text-orange-500">Shopee</span><br className="md:hidden" /> Rẻ Nhất Mỗi Ngày
+          <h1 className="text-4xl md:text-6xl font-black mb-5 leading-[1.05] tracking-tight">
+            Deal <span className="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-gradient">Shopee</span> hời thật,<br />
+            đã được tuyển chọn.
           </h1>
-          <p className="text-gray-400 text-base md:text-lg mb-7 max-w-xl mx-auto">
-            Tổng hợp mã giảm giá, flash sale & sản phẩm hot nhất Shopee — tiết kiệm tới 50%.
+          <p className="text-gray-400 text-base md:text-xl mb-9 max-w-xl mx-auto leading-relaxed">
+            Chúng tôi lọc bỏ deal "nâng giá ảo", chỉ giữ lại sản phẩm <span className="text-white font-semibold">giảm giá thật</span> & bán chạy — bạn khỏi mất công dò.
           </p>
-          <a
-            href={shopeeLink({ keyword: "flash sale" })}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 px-8 py-4 rounded-full font-black text-lg transition shadow-lg shadow-orange-500/30 hover:scale-105"
-          >
-            🛒 Xem Deal Hot Ngay
-          </a>
-          <div className="flex justify-center gap-6 md:gap-10 text-center mt-8">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <a
+              href={shopeeLink({ keyword: "flash sale" })}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 px-8 py-4 rounded-full font-black text-lg transition shadow-xl shadow-orange-500/30 hover:scale-105 animate-pulse-glow"
+            >
+              🛒 Xem Deal Hot Ngay
+            </a>
+            <a href="#why" className="text-gray-400 hover:text-white text-sm font-medium px-4 py-4 transition">
+              Vì sao nên dùng? ↓
+            </a>
+          </div>
+          <div className="flex justify-center gap-8 md:gap-12 text-center mt-12">
             {[["10K+", "Deal mỗi ngày"], ["50%", "Giảm tối đa"], ["2M+", "Lượt săn"]].map(([v, l]) => (
               <div key={l}>
-                <div className="text-xl md:text-2xl font-black text-orange-400">{v}</div>
-                <div className="text-gray-500 text-xs">{l}</div>
+                <div className="text-2xl md:text-3xl font-black bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">{v}</div>
+                <div className="text-gray-500 text-xs mt-1">{l}</div>
               </div>
             ))}
           </div>
@@ -208,8 +220,8 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-6xl mx-auto px-4 py-8">
-        <h2 className="text-lg md:text-xl font-bold mb-4">Danh mục hot 🔥</h2>
+      <section className="max-w-6xl mx-auto px-4 py-6">
+        <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">Danh mục hot</h2>
         <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-3">
           {categories.map((c) => (
             <a
@@ -217,9 +229,9 @@ export default function Home() {
               href={shopeeLink({ keyword: c.keyword })}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              className="bg-gray-900 hover:bg-gray-800 border border-gray-800 hover:border-orange-500/50 rounded-2xl p-3 text-center transition group"
+              className="bg-gradient-to-b from-gray-900 to-gray-900/40 hover:from-orange-500/10 hover:to-gray-900 border border-gray-800 hover:border-orange-500/50 rounded-2xl p-3 text-center transition-all duration-300 group hover:-translate-y-0.5"
             >
-              <div className="text-2xl md:text-3xl mb-1">{c.emoji}</div>
+              <div className="text-2xl md:text-3xl mb-1 group-hover:scale-110 transition-transform">{c.emoji}</div>
               <div className="text-[10px] md:text-xs font-semibold text-gray-300 group-hover:text-orange-400 transition">{c.name}</div>
             </a>
           ))}
@@ -227,13 +239,15 @@ export default function Home() {
       </section>
 
       {/* Hot Deals */}
-      <section className="max-w-6xl mx-auto px-4 pb-10">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg md:text-xl font-bold flex items-center gap-2">⚡ Deal Giảm Sốc Hôm Nay</h2>
+      <section className="max-w-6xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-xl md:text-2xl font-black flex items-center gap-2">
+            <span className="text-orange-500">⚡</span> Deal Giảm Sốc Hôm Nay
+          </h2>
           <a href={shopeeLink({ keyword: "flash sale" })} target="_blank" rel="noopener noreferrer sponsored" className="text-orange-400 hover:text-orange-300 text-xs md:text-sm font-medium">Xem tất cả →</a>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {displayDeals.map((d) => {
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {displayDeals.map((d, i) => {
             const link = d.link;
             const stockPct = Math.min(100, Math.round((d.stockLeft / 50) * 100));
             return (
@@ -242,37 +256,46 @@ export default function Home() {
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="bg-gray-900 border border-gray-800 hover:border-orange-500/50 rounded-2xl overflow-hidden transition group hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/10 flex flex-col"
+                style={{ animationDelay: `${Math.min(i, 8) * 40}ms` }}
+                className="animate-fade-up relative bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden transition-all duration-300 group hover:-translate-y-1.5 hover:border-orange-500/60 hover:shadow-2xl hover:shadow-orange-500/10 flex flex-col"
               >
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 h-32 md:h-40 flex items-center justify-center relative overflow-hidden">
+                <div className="bg-gradient-to-br from-gray-800 to-gray-900 h-36 md:h-44 flex items-center justify-center relative overflow-hidden">
                   {d.imageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={d.imageUrl} alt={d.name} loading="lazy" className="w-full h-full object-cover" />
+                    <img src={d.imageUrl} alt={d.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
-                    <span className="text-5xl">{d.emoji}</span>
+                    <span className="text-6xl group-hover:scale-110 transition-transform duration-300">{d.emoji}</span>
                   )}
-                  {d.discount > 0 && <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-black px-2 py-0.5 rounded-md">-{d.discount}%</span>}
-                  {d.hot && <span className="absolute top-2 right-2 bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">🔥 HOT</span>}
+                  {/* shimmer sweep on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 shimmer transition-opacity" />
+                  {d.discount > 0 && (
+                    <span className="absolute top-2 left-2 bg-gradient-to-br from-red-500 to-red-600 text-white text-xs font-black px-2 py-1 rounded-lg shadow-lg">
+                      -{d.discount}%
+                    </span>
+                  )}
+                  {d.hot && <span className="absolute top-2 right-2 bg-orange-500/90 backdrop-blur text-white text-[10px] font-bold px-2 py-1 rounded-lg">🔥 HOT</span>}
+                  <span className="absolute bottom-2 left-2 bg-black/50 backdrop-blur text-white text-[9px] font-medium px-1.5 py-0.5 rounded flex items-center gap-1">
+                    <span className="text-blue-400">✓</span> Shopee Mall
+                  </span>
                 </div>
                 <div className="p-3 flex flex-col flex-1">
                   <p className="text-xs md:text-sm font-medium text-gray-200 line-clamp-2 mb-2 group-hover:text-white transition min-h-[2.5rem]">{d.name}</p>
                   <div className="flex items-baseline gap-1.5 mb-1">
-                    <span className="text-orange-400 font-black text-base md:text-lg">{formatVND(d.salePrice)}</span>
+                    <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent font-black text-lg md:text-xl">{formatVND(d.salePrice)}</span>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] mb-2">
+                  <div className="flex items-center justify-between text-[11px] mb-2.5">
                     <span className="text-gray-600 line-through">{formatVND(d.originalPrice)}</span>
-                    <span className="text-yellow-400">★ {d.rating}</span>
+                    <span className="text-yellow-400 flex items-center gap-0.5">★ {d.rating}</span>
                   </div>
-                  {/* stock bar urgency */}
                   <div className="mt-auto">
                     <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-1">
-                      <div className="h-full bg-gradient-to-r from-orange-500 to-red-500" style={{ width: `${100 - stockPct}%` }} />
+                      <div className="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full" style={{ width: `${Math.max(15, 100 - stockPct)}%` }} />
                     </div>
-                    <div className="flex items-center justify-between text-[10px] text-gray-500 mb-2">
-                      <span>Đã bán {d.sold.toLocaleString("vi-VN")}</span>
-                      <span className="text-red-400">Còn {d.stockLeft}</span>
+                    <div className="flex items-center justify-between text-[10px] text-gray-500 mb-2.5">
+                      <span>🔥 Đã bán {d.sold.toLocaleString("vi-VN")}</span>
+                      <span className="text-red-400 font-medium">Còn {d.stockLeft}</span>
                     </div>
-                    <span className="block w-full bg-orange-500 group-hover:bg-orange-400 text-white text-xs md:text-sm font-bold py-2 rounded-lg text-center transition">
+                    <span className="block w-full bg-gradient-to-r from-orange-500 to-red-500 group-hover:from-orange-400 group-hover:to-red-400 text-white text-xs md:text-sm font-bold py-2.5 rounded-xl text-center transition">
                       Mua ngay →
                     </span>
                   </div>
@@ -283,13 +306,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust */}
-      <section className="bg-gray-900 py-8 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-3 gap-4 text-center">
-          {[["✅", "100% link Shopee chính hãng"], ["💰", "Giá rẻ nhất, cập nhật 24/7"], ["⚡", "Flash sale mới mỗi giờ"]].map(([i, txt]) => (
-            <div key={txt}>
-              <div className="text-2xl md:text-3xl mb-1">{i}</div>
-              <div className="text-gray-400 text-[11px] md:text-sm">{txt}</div>
+      {/* Why DealSync — honest value prop */}
+      <section id="why" className="max-w-6xl mx-auto px-4 py-14">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-black mb-2">Sao không tự search Shopee? 🤔</h2>
+          <p className="text-gray-400 text-sm md:text-base max-w-xl mx-auto">Vì search Shopee đầy deal "nâng giá rồi giảm". DealSync làm 3 việc đó cho bạn:</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { icon: "🎯", title: "Lọc deal giả", desc: "Bỏ qua sản phẩm nâng giá ảo rồi treo -50%. Chỉ giữ deal giảm thật so với giá lịch sử." },
+            { icon: "⚡", title: "Gom 1 chỗ", desc: "Flash sale, mã giảm, voucher từ nhiều ngành hàng — tổng hợp 1 trang, khỏi nhảy qua lại." },
+            { icon: "🔔", title: "Báo khi giảm sâu", desc: "Đăng ký email để nhận top deal mỗi sáng, không bỏ lỡ đợt giảm giá lớn." },
+          ].map((f) => (
+            <div key={f.title} className="bg-gradient-to-b from-gray-900 to-gray-900/40 border border-gray-800 rounded-2xl p-6 hover:border-orange-500/40 transition">
+              <div className="text-3xl mb-3">{f.icon}</div>
+              <h3 className="font-bold text-lg mb-1.5">{f.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
@@ -297,27 +329,45 @@ export default function Home() {
 
       {/* Email capture */}
       <section className="py-12 px-4">
-        <div className="max-w-xl mx-auto text-center bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-3xl p-8 md:p-10">
-          <h2 className="text-xl md:text-2xl font-black mb-2">Nhận Deal Hot Qua Email 📩</h2>
-          <p className="text-gray-400 text-sm mb-6">Mỗi sáng gửi bạn 10 deal giảm sốc nhất Shopee.</p>
-          <form
-            className="flex gap-2 max-w-sm mx-auto"
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Đăng ký thành công! Bạn sẽ nhận deal hot mỗi sáng 🎉");
-            }}
-          >
-            <input type="email" required placeholder="email@cua-ban.com" className="flex-1 bg-gray-800 border border-gray-700 rounded-full px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-orange-500" />
-            <button className="bg-orange-500 hover:bg-orange-400 px-5 py-3 rounded-full text-sm font-bold transition">Đăng ký</button>
-          </form>
+        <div className="relative max-w-2xl mx-auto text-center bg-gradient-to-br from-orange-500/15 via-red-500/10 to-transparent border border-orange-500/20 rounded-3xl p-8 md:p-12 overflow-hidden">
+          <div className="absolute -top-16 -right-16 w-48 h-48 bg-orange-500/20 rounded-full blur-3xl" />
+          <div className="relative">
+            <h2 className="text-2xl md:text-3xl font-black mb-2">Nhận Top Deal Mỗi Sáng 📩</h2>
+            <p className="text-gray-400 text-sm md:text-base mb-7">10 deal hời nhất, đã lọc kỹ — gửi thẳng vào email bạn.</p>
+            <form
+              className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Đăng ký thành công! Bạn sẽ nhận deal hot mỗi sáng 🎉");
+              }}
+            >
+              <input type="email" required placeholder="email@cua-ban.com" className="flex-1 bg-gray-800/80 border border-gray-700 rounded-full px-5 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-orange-500" />
+              <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 px-6 py-3.5 rounded-full text-sm font-bold transition">Đăng ký miễn phí</button>
+            </form>
+            <p className="text-gray-600 text-xs mt-3">Miễn phí · Hủy bất cứ lúc nào · Không spam</p>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 border-t border-gray-800 py-6 px-4 text-center text-gray-500 text-xs">
-        <p className="mb-1">© 2024 DealSync — Săn deal Shopee giá rẻ.</p>
-        <p>DealSync là đối tác Shopee Affiliate. Chúng tôi có thể nhận hoa hồng từ các đơn mua qua link trên trang.</p>
+      <footer className="bg-gray-900/50 border-t border-gray-800 py-8 px-4 text-center text-gray-500 text-xs mb-16 md:mb-0">
+        <div className="flex items-center justify-center gap-1.5 mb-3">
+          <span className="text-base font-black text-orange-500">Deal</span>
+          <span className="text-base font-black text-white">Sync</span>
+        </div>
+        <p className="mb-1">© 2024 DealSync — Săn deal Shopee giá rẻ, đã tuyển chọn.</p>
+        <p className="max-w-md mx-auto">DealSync là đối tác Shopee Affiliate. Chúng tôi có thể nhận hoa hồng từ đơn mua qua link trên trang — không ảnh hưởng giá bạn trả.</p>
       </footer>
+
+      {/* Sticky mobile CTA */}
+      <a
+        href={shopeeLink({ keyword: "flash sale" })}
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-gradient-to-r from-orange-500 to-red-500 text-white text-center font-black py-4 shadow-2xl"
+      >
+        🔥 Xem Flash Sale Hôm Nay →
+      </a>
     </div>
   );
 }
